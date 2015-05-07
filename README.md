@@ -45,7 +45,7 @@ git submodule update
 You can start the sample dashboard, by using the serve gulp task:
 
 ```bash
-gulp serve
+gulp webserver
 ```
 
 Now you open the sample in your browser at http://localhost:9001/sample
