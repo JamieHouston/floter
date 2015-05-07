@@ -113,31 +113,31 @@ gulp.task('docs', function(){
     .pipe(gulp.dest('./dist/docs'));
 });
 
-/** build sample **/
+/** build site **/
 gulp.task('install-widgets', function(){
-  return gulp.src('sample/widgets/*/bower.json')
+  return gulp.src('site/widgets/*/bower.json')
              .pipe($.install());
 });
 
 gulp.task('widget-templates', ['install-widgets'], function(){
   var opts = {
     root: '{widgetsPath}',
-    module: 'sample'
+    module: 'site'
   };
-  return gulp.src('sample/widgets/*/src/*.html')
+  return gulp.src('site/widgets/*/src/*.html')
              .pipe($.minifyHtml(minifyHtmlOptions))
              .pipe($.angularTemplatecache('widgets.js', opts))
              .pipe(gulp.dest('.tmp'));
 });
 
-gulp.task('sample-templates', function(){
+gulp.task('site-templates', function(){
   var opts = {
     root: 'partials',
-    module: 'sample'
+    module: 'site'
   };
-  return gulp.src('sample/partials/*.html')
+  return gulp.src('site/partials/*.html')
              .pipe($.minifyHtml(minifyHtmlOptions))
-             .pipe($.angularTemplatecache('samples.js', opts))
+             .pipe($.angularTemplatecache('main.js', opts))
              .pipe(gulp.dest('.tmp'));
 });
 
@@ -153,14 +153,14 @@ gulp.task('dashboard-templates', function(){
 });
 
 gulp.task('copy-font', function(){
-  gulp.src('sample/components/bootstrap/dist/fonts/*')
-      .pipe(gulp.dest('dist/sample/fonts'));
+  gulp.src('site/components/bootstrap/dist/fonts/*')
+      .pipe(gulp.dest('dist/site/fonts'));
 });
 
-gulp.task('sample', ['widget-templates', 'sample-templates', 'dashboard-templates', 'copy-font'], function(){
+gulp.task('site', ['widget-templates', 'site-templates', 'dashboard-templates', 'copy-font'], function(){
   var templates = gulp.src('.tmp/*.js', {read: false});
   var assets = $.useref.assets();
-  gulp.src('sample/index.html')
+  gulp.src('site/index.html')
       // inject templates
       .pipe($.inject(templates, {relative: true}))
       .pipe(assets)
@@ -172,7 +172,7 @@ gulp.task('sample', ['widget-templates', 'sample-templates', 'dashboard-template
       .pipe(assets.restore())
       .pipe($.useref())
       .pipe($.revReplace())
-      .pipe(gulp.dest('dist/sample'));
+      .pipe(gulp.dest('dist/site'));
 });
 
 /** livereload **/
@@ -182,15 +182,15 @@ gulp.task('watch', function(){
     'src/scripts/*.js',
     'src/styles/*.css',
     'src/templates/*.html',
-    'sample/*.html',
-    'sample/scripts/*.js',
-    'sample/partials/*.html',
-    'sample/widgets/*/*.js',
-    'sample/widgets/*/*.css',
-    'sample/widgets/*/*.html',
-    'sample/widgets/*/src/*.js',
-    'sample/widgets/*/src/*.css',
-    'sample/widgets/*/src/*.html'
+    'site/*.html',
+    'site/scripts/*.js',
+    'site/partials/*.html',
+    'site/widgets/*/*.js',
+    'site/widgets/*/*.css',
+    'site/widgets/*/*.html',
+    'site/widgets/*/src/*.js',
+    'site/widgets/*/src/*.css',
+    'site/widgets/*/src/*.html'
   ];
   gulp.watch(paths).on('change', function(file){
     gulp.src(file.path)
@@ -202,11 +202,11 @@ gulp.task('webserver', ['install-widgets'], function(){
   connect.server({
     port: 9001,
     livereload: true,
-    // redirect / to /sample
+    // redirect / to /site
     middleware: function() {
       return [
         modRewrite([
-          '^/$ /sample/ [R]'
+          '^/$ /site/ [R]'
         ])
       ];
     }
@@ -259,6 +259,6 @@ gulp.task('e2e', ['e2e-server', 'webdriver_update'], function(cb) {
 });
 
 /** shorthand methods **/
-gulp.task('all', ['build', 'docs', 'sample']);
+gulp.task('all', ['build', 'docs', 'site']);
 
 gulp.task('default', ['build']);

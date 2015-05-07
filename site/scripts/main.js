@@ -1,4 +1,4 @@
-/* *
+/*
  * The MIT License
  *
  * Copyright (c) 2015, Sebastian Sdorra
@@ -18,20 +18,56 @@
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
  * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
  */
 'use strict';
 
-angular.module('sample-01', ['adf', 'LocalStorageModule'])
-.controller('sample01Ctrl', function($scope, localStorageService){
+angular.module('home', [
+  'adf', 'adf.structures.base', 'adf.widget.news',
+  'adf.widget.randommsg', 'adf.widget.weather',
+  'adf.widget.markdown', 'adf.widget.linklist',
+  'adf.widget.github', 'adf.widget.version',
+  'adf.widget.clock', 'LocalStorageModule', 'ngRoute'
+])
+.config(function(dashboardProvider, $routeProvider, localStorageServiceProvider){
+  dashboardProvider.widgetsPath('widgets/');
+  localStorageServiceProvider.setPrefix('adf');
 
-  var name = 'sample-01';
+  $routeProvider.when('/home', {
+    templateUrl: 'partials/home.html',
+    controller: 'homeCtrl'
+  })
+  .otherwise({
+    redirectTo: 'home'
+  });
+
+})
+.controller('navigationCtrl', function($scope, $location){
+
+  $scope.navCollapsed = true;
+
+  $scope.toggleNav = function(){
+    $scope.navCollapsed = !$scope.navCollapsed;
+  };
+
+  $scope.$on('$routeChangeStart', function() {
+    $scope.navCollapsed = true;
+  });
+
+  $scope.navClass = function(page) {
+    var currentRoute = $location.path().substring(1) || 'home';
+    return page === currentRoute || new RegExp(page).test(currentRoute) ? 'active' : '';
+  };
+
+})
+.controller('homeCtrl', function($scope, localStorageService){
+  var name = 'Home Page';
   var model = localStorageService.get(name);
   if (!model) {
     // set default model for demo purposes
     model = {
-      title: "Sample 01",
+      title: "Home",
       structure: "4-8",
       rows: [{
         columns: [{
@@ -40,49 +76,36 @@ angular.module('sample-01', ['adf', 'LocalStorageModule'])
             type: "linklist",
             config: {
               links: [{
-                title: "SCM-Manager",
-                href: "http://www.scm-manager.org"
+                title: "PPM",
+                href: "http://github.com/daptiv/ppm"
               }, {
-                title: "Github",
-                href: "https://github.com"
+                title: "Target Process",
+                href: "https://daptiv.tpondemand.com"
               }, {
-                title: "Bitbucket",
-                href: "https://bitbucket.org"
-              }, {
-                title: "Stackoverflow",
-                href: "http://stackoverflow.com"
+                title: "Team City",
+                href: "http://teamcity.hq.daptiv.com"
               }]
             },
             title: "Links"
           }, {
             type: "weather",
             config: {
-              location: "Hildesheim"
+              location: "98101"
             },
-            title: "Weather Hildesheim"
-          }, {
-            type: "weather",
-            config: {
-              location: "Edinburgh"
-            },
-            title: "Weather"
-          }, {
-            type: "weather",
-            config: {
-              location: "Dublin,IE"
-            },
-            title: "Weather"
+            title: "Weather Seattle"
           }]
         }, {
           styleClass: "col-md-8",
           widgets: [{
-            type: "randommsg",
-            config: {},
-            title: "Douglas Adams"
+            type: "githubHistory",
+            config: {
+              path: "foresterh/floter"
+            },
+            title: "Floter History"
           }, {
             type: "markdown",
             config: {
-              content: "![scm-manager logo](https://bitbucket.org/sdorra/scm-manager/wiki/resources/scm-manager_logo.jpg)\n\nThe easiest way to share and manage your Git, Mercurial and Subversion repositories over http.\n\n* Very easy installation\n* No need to hack configuration files, SCM-Manager is completely configureable from its Web-Interface\n* No Apache and no database installation is required\n* Central user, group and permission management\n* Out of the box support for Git, Mercurial and Subversion\n* Full RESTFul Web Service API (JSON and XML)\n* Rich User Interface\n* Simple Plugin API\n* Useful plugins available ( f.e. Ldap-, ActiveDirectory-, PAM-Authentication)\n* Licensed under the BSD-License"
+              content: "[Daptiv](http://daptiv.com) hackdays created this *thing*."
             },
             title: "Markdown"
           }]
@@ -97,4 +120,5 @@ angular.module('sample-01', ['adf', 'LocalStorageModule'])
   $scope.$on('adfDashboardChanged', function (event, name, model) {
     localStorageService.set(name, model);
   });
+
 });

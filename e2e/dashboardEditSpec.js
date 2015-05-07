@@ -28,13 +28,13 @@
 describe('dashboard edit tests', function(){
 
   beforeEach(function(){
-    browser.get('http://localhost:9003/sample/index.html#/sample/03');
+    browser.get('http://localhost:9003/site/index.html#/home');
     browser.executeScript('window.localStorage.clear();');
   });
 
-  it('should have Sample 01 as default title', function(){
+  it('should have Home as default title', function(){
     var title = element(by.css('h1')).getText();
-    expect(title).toEqual('Sample 03');
+    expect(title).toEqual('Home');
   });
 
   it('title should be changeable', function(){
@@ -52,7 +52,7 @@ describe('dashboard edit tests', function(){
     var title = element(by.css('h1'));
 
     // title should only change after the dialog is closed
-    expect(title.getText()).toEqual('Sample 03');
+    expect(title.getText()).toEqual('Home');
 
     // close dialog
     element(by.css('button.close')).click();

@@ -2,13 +2,13 @@
 /node_modules/
 
 # bower
-/sample/components/
+/site/components/
 
 # gulp build
 /build/
 /.tmp/
 /dist/docs/
-/dist/sample/
+/dist/site/
 
 # netbeans
 /nbproject/
@@ -19,3 +19,6 @@
 
 # brackets
 .brackets.json
+
+#python
+*.pyc

@@ -12,11 +12,11 @@
     "Gruntfile.js",
     "node_modules",
     "package.json",
-    "sample",
+    "site",
     "src",
     ".tmp",
     "dist/docs",
-    "dist/sample"
+    "dist/site"
   ],
   "keywords": [
     "dashboard",
@@ -29,7 +29,11 @@
     "angular": "1.2.28",
     "angular-bootstrap": "0.12.0",
     "bootstrap": "3.3.4",
-    "Sortable": "1.1.1"
+    "Sortable": "1.1.1",
+    "adf-widget-linklist": "~0.1.0",
+    "adf-widget-markdown": "~0.1.1",
+    "adf-widget-clock": "~0.1.2",
+    "adf-structures-base": "~0.1.0"
   },
   "devDependencies": {
     "angular-mocks": "1.2.28",
