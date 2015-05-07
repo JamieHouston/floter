@@ -26,8 +26,7 @@
 angular.module('home', [
   'adf', 'adf.structures.base', 'adf.widget.news',
   'adf.widget.randommsg', 'adf.widget.weather',
-  'adf.widget.markdown', 'adf.widget.linklist',
-  'adf.widget.github', 'adf.widget.version',
+  'adf.widget.linklist', 'adf.widget.github', 'adf.widget.version',
   'adf.widget.clock', 'LocalStorageModule', 'ngRoute'
 ])
 .config(function(dashboardProvider, $routeProvider, localStorageServiceProvider){
@@ -102,12 +101,6 @@ angular.module('home', [
               path: "foresterh/floter"
             },
             title: "Floter History"
-          }, {
-            type: "markdown",
-            config: {
-              content: "[Daptiv](http://daptiv.com) hackdays created this *thing*."
-            },
-            title: "Markdown"
           }]
         }]
       }]

@@ -8,7 +8,7 @@ Follow me ([@ssdorra](https://twitter.com/ssdorra)) on twitter for latest update
 
 ## Demo
 
-A live demo of the adf can be viewed [here](http://sdorra.github.io/angular-dashboard-framework/). The demo uses html5 localStorage to store the state of the dashboard. The source of the demo can be found [here](https://github.com/sdorra/angular-dashboard-framework/tree/master/sample).
+A live demo of the adf can be viewed [here](http://sdorra.github.io/angular-dashboard-framework/). The demo uses html5 localStorage to store the state of the dashboard. The source of the demo can be found [here](https://github.com/sdorra/angular-dashboard-framework/tree/master/site).
 
 A more dynamic example can be found [here](https://github.com/sdorra/adf-dynamic-example).
 
@@ -42,20 +42,20 @@ git submodule init
 git submodule update
 ```
 
-You can start the sample dashboard, by using the serve gulp task:
+You can start the site dashboard, by using the serve gulp task:
 
 ```bash
 gulp webserver
 ```
 
-Now you open the sample in your browser at http://localhost:9001/sample
+Now you open the site in your browser at http://localhost:9001/site
 
-Or you can create a release build of angular-dashboard-framework and the samples:
+Or you can create a release build of the site:
 
 ```bash
 gulp all
 ```
-The sample and the final build of angular-dashboard-framework are now in the dist directory.
+The site and the final build of angular-dashboard-framework are now in the dist directory.
 
 
 ## License
